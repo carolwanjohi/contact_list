@@ -1,3 +1,5 @@
+import pyperclip
+
 class Contact:
     """
     class that generates new instances of contacts
@@ -53,7 +55,42 @@ class Contact:
         for contact in cls.contact_list: 
             if contact.phone_number == number:
                 return contact
+    
+    @classmethod
+    def contact_exist(cls, number):
+        
+        '''
+        method that checks if a contact exists from the contact list
+        
+        Args:
+            number: phone number to search if it exists
+            
+        Returns:
+            Boolean: true/false depending if the contact exists
+            
+        '''
+        
+        for contact in cls.contact_list:
+            if contact.phone_number == number:
+                return True
+            
+        return False
 
+    @classmethod
+    def display_contacts(cls):
+        
+        '''
+        Method that returns the contact list
+        '''
+        
+        return cls.contact_list
+    
 
+    @classmethod
+    def copy_email(cls, number):
+        contact_found = Contact.find_by_number(number)
+        pyperclip.copy(contact_found.email)
+    
+    
 
 

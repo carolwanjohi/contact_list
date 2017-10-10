@@ -1,5 +1,6 @@
 import unittest 
 from contact import Contact 
+import pyperclip
 
 class TestContact(unittest.TestCase):
 
@@ -108,10 +109,67 @@ class TestContact(unittest.TestCase):
 
         self.assertEqual(found_contact.email,test_contact.email)
         
+    # check if contact object exists
+    def test_contact_exists(self):
+        
+        '''
+        test to check if we can return a boolean if we can't find the contact
+        '''
 
+        self.new_contact.save_contact()
 
+        # create new contact
+        test_contact = Contact("test","user","07876654321","test@user.com")
 
+        # save the new contact
+        test_contact.save_contact()
+        
+        # use contact exist method
+        contact_exists = Contact.contact_exist("07876654321")
+        
+        self.assertTrue(contact_exists)
+        
+    # check if contact object exists
+    def test_contact_does_not_exists(self):
+        
+        '''
+        test to check if we can return a boolean if we can't find the contact
+        '''
 
+        self.new_contact.save_contact()
+
+        # create new contact
+        test_contact = Contact("test","user","07876654321","test@user.com")
+
+        # save the new contact
+        test_contact.save_contact()
+        
+        # use contact exist method
+        contact_exists = Contact.contact_exist("07876654320")
+        
+        self.assertFalse(contact_exists)
+        
+    # check if all the contacts are displayed
+    def test_display_all_contacts(self):
+        
+        '''
+        Mehtod that returns a list of all contacts saved
+        '''
+        
+        self.assertEqual(Contact.display_contacts(),Contact.contact_list)
+        
+    # Check if we can copy and paste contact
+    def test_copy_email(self):
+        
+        '''
+        Test to confirm that we are copying the email address from a found contact 
+        '''
+
+        self.new_contact.save_contact()
+        
+        Contact.copy_email("0712345678")
+        
+        self.assertEqual(self.new_contact.email,pyperclip.paste())
 
 if __name__ == '__main__':
     unittest.main()

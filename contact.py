@@ -88,8 +88,11 @@ class Contact:
 
     @classmethod
     def copy_email(cls, number):
+        '''
+        Method that returns the contact's copied email
+        '''
         contact_found = Contact.find_by_number(number)
-        pyperclip.copy(contact_found.email)
+        return pyperclip.copy(contact_found.email)
     
     
 
